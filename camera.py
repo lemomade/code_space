@@ -12,14 +12,14 @@ class MayaClass(object):
 		cmds.parent( cn, group, relative=True )
 		cmds.parent( aim, group, relative=True )
 
-		CONNECT_INDEXS={ cn+'.translate':group+'.translate',
+		CONNECT_INDEXS={ cn+'.translate':group+'.constraintTranslate',
 						cn+'.parentInverseMatrix[0]':group+'.constraintParentInverseMatrix',
 						cn+'.rotatePivot':group+'.constraintRotatePivot',
 						cn+'.rotatePivotTranslate':group+'.constraintRotateTranslate',
 						group+'.distanceBetween':cameraShape+'.centerOfInterest',
 						group+'.constraintRotateX':cn+'.rotateX',
-						group+'.distanceBetween':cn+'.rotateY',
-						group+'.distanceBetween':cn+'.rotateZ',
+						group+'.constraintRotateY':cn+'.rotateY',
+						group+'.constraintRotateZ':cn+'.rotateZ',
 						aim+'.translate':group+'.target[0].targetTranslate',
 						aim+'.translate.translateX':group+'.target[0].targetTranslateX',
 						aim+'.translate.translateY':group+'.target[0].targetTranslateY',
@@ -37,7 +37,7 @@ class MayaClass(object):
 		cmds.setAttr(group+'.aimVectorX',0)
 		cmds.setAttr(group+'.aimVectorZ',-1)
 		cmds.setAttr(cn+'_aimShape.visibility',0)
-		cmds.setAttr(cn+'_aim.displayRotatePivot',1)
+		cmds.setAttr(aim+'.displayRotatePivot',1)
 
 		cmds.addAttr(cn,longName='overscan',at='double',min=0.0,max=1.0,dv=1)
 		cmds.setAttr(cn+'.overscan',e=1,keyable=1)
