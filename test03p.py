@@ -28,7 +28,7 @@ def create_mesh(mesh_name, index):
     return trans_node
 
 
-def create_node(shade_type, shade_name):
+def (shade_type, shade_name):
     node_list = None
     if shade_type == 'texture':
         file_node = pmc.shadingNode('file', asTexture=1, icm=1, n=shade_name) 
