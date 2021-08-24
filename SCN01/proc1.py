@@ -37,7 +37,7 @@ def six(xml_path, replace_text):
     video_info_lst = video_items_info_new()
     ii=0
     for session in video_info_lst:
-        current_session = video_info_lst.index(session) + 1
+        current_session = video_info_lst.index(session)
         for index, scence in enumerate(session):
             ii = ii + 1
             a=modify_text(current_session, index+1, replace_text, ii)
@@ -89,12 +89,15 @@ def split_marker_info():
     return list(split_range)
 
 def seconds_to_frame(in_frame,rate):
+    in_frame= in_frame * 1.0000
+    rate = rate * 1.0
     r = in_frame % rate
     seconds = in_frame / rate
 
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
-    out_seconds="%02d:%02d:%02d,%02d" % (h, m, s, r)
+    r = r/rate*1000.0
+    out_seconds="%02d:%02d:%02d,%03d" % (h, m, s, r)
     return out_seconds
 
 def modify_text( session_index, scence_index,replace_text,ii):
