@@ -34,6 +34,7 @@ def load_xml(xml_file):
 
 
 def six(xml_path, replace_text):
+    rate = int(WORK_ROOT.find(".sequence/rate/timebase").text)
     video_info_lst = video_items_info_new()
     ii=0
     for session in video_info_lst:
@@ -61,13 +62,13 @@ def six(xml_path, replace_text):
                 end = i['end']
             ac=ac+1
             with open(out_file_path,'a') as new_file:
-                time = seconds_to_frame(start,24)+" --> "+seconds_to_frame(end,24)
+                time = seconds_to_frame(start,rate)+" --> "+seconds_to_frame(end,rate)
                 new_file.write(str(ac)+"\n")
                 new_file.write(time+"\n")
                 new_file.write(name+"\n")
                 new_file.write("\n")
                 new_file.close()
-    return out_file_path
+    # return out_file_path
 def get_items():
     work_tracks = WORK_ROOT.findall("./sequence/media/video/track")
     video_track = work_tracks[VIDEO_TRACK_INDEX - 1]
@@ -80,10 +81,13 @@ def get_items():
 
 def split_marker_info():
     session_marker_lst = WORK_ROOT.findall("./sequence/marker")
+    endtime = int(WORK_ROOT.find(".sequence/duration").text)
     split_end_lst = [int(i.find('in').text) for i in session_marker_lst]
     split_end_lst.sort()
 
+    split_end_lst.append(endtime)
     split_start_lst = split_end_lst[:-1]
+
     split_start_lst.insert(0, 0)
     split_range = zip(split_start_lst, split_end_lst)
     return list(split_range)
